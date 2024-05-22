@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche de livres par auteur{% endblock %}
+
+{% block body %}
+    <h1>Recherche de livres par auteur</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.auteurLivre) }}
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    {{ form_end(form) }}
+
+    {% if form.vars.submitted %}
+        <h2>Résultats de recherche</h2>
+        {% if livres is empty %}
+            <p>Aucun livre trouvé pour "{{ form.vars.value['auteurLivre'] }}".</p>
+        {% else %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Auteur</th>
+                        <th>Référence</th>
+                        <th>Ouvrage</th>
+                        <th>Année de publication</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for livre in livres %}
+                        <tr>
+                            <td>{{ livre.id }}</td>
+                            <td>{{ livre.nomLivre }}</td>
+                            <td>{{ livre.auteurLivre }}</td>
+                            <td>{{ livre.reference }}</td>
+                            <td>{{ livre.ouvrage }}</td>
+                            <td>{{ livre.anneePublication|date('Y-m-d') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endif %}
+{% endblock %}
